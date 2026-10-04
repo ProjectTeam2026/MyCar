@@ -1,4 +1,4 @@
-namespace DriverApp;
+namespace MyCar;
 
 public partial class LoginPage : ContentPage
 {
