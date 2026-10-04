@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyCar.MainPage"
+             BackgroundColor="Black"
+             Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <WebView x:Name="VideoWebView" />
+
+        <Button x:Name="StartButton"
+                Text="Начать"
+                Clicked="OnStartClicked"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="220"
+                HeightRequest="60"
+                CornerRadius="30"
+                BackgroundColor="White"
+                TextColor="Black"
+                FontSize="30" />
+
+        <VerticalStackLayout x:Name="AuthButtons"
+                             IsVisible="False"
+                             VerticalOptions="End"
+                             HorizontalOptions="Center"
+                             Spacing="16"
+                             Padding="0,0,0,60">
+
+            <Button Text="Войти"
+                    Clicked="OnLoginClicked"
+                    WidthRequest="240"
+                    HeightRequest="56"
+                    CornerRadius="28"
+                    BackgroundColor="White"
+                    TextColor="Black"
+                    FontSize="18" />
+
+            <Button Text="Зарегистрироваться"
+                    Clicked="OnRegisterClicked"
+                    WidthRequest="240"
+                    HeightRequest="56"
+                    CornerRadius="28"
+                    BackgroundColor="Transparent"
+                    BorderColor="White"
+                    BorderWidth="1"
+                    TextColor="White"
+                    FontSize="18" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
