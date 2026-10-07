@@ -13,6 +13,10 @@ namespace MyCar
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Anticva-Regular.otf", "AnticvaRegular");
+                    fonts.AddFont("AA_Stetica_Light.otf", "AA_SteticaLight");
+                    fonts.AddFont("Vetrino.otf", "Vetrino");
+                    fonts.AddFont("NexaText-Light.otf", "NexaTextLight");
                 });
 
 #if ANDROID

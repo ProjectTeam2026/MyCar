@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="MyCar.RegisterPage"
-    BackgroundColor="#171717"
+    BackgroundColor="#4A4947"
     NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
@@ -12,24 +12,24 @@
             Padding="25,20,25,30"
             Spacing="0">
 
-            <Button Text="‹" FontSize="40" TextColor="White" BackgroundColor="Transparent" HorizontalOptions="Start" Padding="0" Clicked="BackButton_Clicked" />
-            <Label Text="Создание аккаунта" TextColor="White" FontSize="30" FontAttributes="Bold" Margin="0,15,0,8" />
-            <Label Text="Заполните данные, чтобы зарегистрироваться" TextColor="#AAAAAA" FontSize="15" Margin="0,0,0,25" />
-            <Label Text="Имя" TextColor="White" FontSize="14" Margin="0,0,0,7" />
-            <Entry x:Name="NameEntry" Placeholder="Введите ваше имя" PlaceholderColor="#888888" TextColor="White" BackgroundColor="#252525" HeightRequest="55" Margin="0,0,0,18" />
-            <Label Text="Телефон" TextColor="White" FontSize="14" Margin="0,0,0,7" />
-            <Entry x:Name="PhoneEntry" Placeholder="+7 (___) ___-__-__"  PlaceholderColor="#888888" TextColor="White" Keyboard="Telephone" BackgroundColor="#252525" HeightRequest="55" Margin="0,0,0,18" />
-            <Label Text="Email" TextColor="White" FontSize="14" Margin="0,0,0,7" />
-            <Entry x:Name="EmailEntry" Placeholder="Введите email"  PlaceholderColor="#888888" TextColor="White"  Keyboard="Email"  BackgroundColor="#252525" HeightRequest="55"  Margin="0,0,0,18" />
-            <Label Text="Пароль" TextColor="White" FontSize="14"  Margin="0,0,0,7" />
-            <Entry x:Name="PasswordEntry" Placeholder="Минимум 6 символов" PlaceholderColor="#888888" TextColor="White"  IsPassword="True"  BackgroundColor="#252525" HeightRequest="55" Margin="0,0,0,18" />
-            <Label Text="Повторите пароль" TextColor="White" FontSize="14" Margin="0,0,0,7" />
-            <Entry x:Name="ConfirmPasswordEntry" Placeholder="Повторите пароль" PlaceholderColor="#888888" TextColor="White" IsPassword="True" BackgroundColor="#252525"  HeightRequest="55" Margin="0,0,0,10" />
-            <Label x:Name="ErrorLabel"  TextColor="#FF6B6B" FontSize="14" IsVisible="False" Margin="0,5,0,10" />
-            <Button Text="ЗАРЕГИСТРИРОВАТЬСЯ" TextColor="#171717" BackgroundColor="White" FontAttributes="Bold" FontSize="15" HeightRequest="55" CornerRadius="14" Margin="0,10,0,15" Clicked="RegisterButton_Clicked" />
+            <Button Text="‹" FontSize="40" FontFamily="Vetrino" TextColor="#F9F7F0" BackgroundColor="Transparent" HorizontalOptions="Start" Padding="0" Clicked="BackButton_Clicked" />
+            <Label Text="Создание аккаунта" TextColor="#F9F7F0" FontSize="30" FontFamily="Vetrino" Margin="0,15,0,8" />
+            <Label Text="Заполните данные, чтобы зарегистрироваться" TextColor="#F9F7F0" FontSize="15" FontFamily="NexaTextLight" Margin="0,0,0,25" />
+            <Label Text="Имя" TextColor="#D8D2C2" FontSize="15" FontFamily="NexaTextLight" Margin="0,0,0,7" />
+            <Entry x:Name="NameEntry" Placeholder="Введите ваше имя" PlaceholderColor="#4A4947" TextColor="#4A4947" FontFamily="NexaTextLight" FontSize="15" BackgroundColor="#D8D2C2" HeightRequest="55" Margin="0,0,0,18" />
+            <Label Text="Телефон" TextColor="#D8D2C2" FontSize="15" FontFamily="NexaTextLight" Margin="0,0,0,7" />
+            <Entry x:Name="PhoneEntry" Placeholder="+7 (___) ___-__-__" Keyboard="Telephone" PlaceholderColor="#4A4947" TextColor="#4A4947" FontFamily="NexaTextLight" FontSize="15" BackgroundColor="#D8D2C2" HeightRequest="55" Margin="0,0,0,18" />
+            <Label Text="Email" TextColor="#D8D2C2" FontSize="15" FontFamily="NexaTextLight" Margin="0,0,0,7" />
+            <Entry x:Name="EmailEntry" Placeholder="Введите email" Keyboard="Email" PlaceholderColor="#4A4947" TextColor="#4A4947" FontFamily="NexaTextLight" FontSize="15" BackgroundColor="#D8D2C2" HeightRequest="55"  Margin="0,0,0,18" />
+            <Label Text="Пароль" TextColor="#D8D2C2" FontSize="15" FontFamily="NexaTextLight"  Margin="0,0,0,7" />
+            <Entry x:Name="PasswordEntry" Placeholder="Минимум 6 символов" PlaceholderColor="#4A4947" TextColor="#4A4947" FontFamily="NexaTextLight" FontSize="15" BackgroundColor="#D8D2C2" IsPassword="True" HeightRequest="55" Margin="0,0,0,18" />
+            <Label Text="Повторите пароль" TextColor="#D8D2C2" FontSize="15" FontFamily="NexaTextLight" Margin="0,0,0,7" />
+            <Entry x:Name="ConfirmPasswordEntry" Placeholder="Повторите пароль" PlaceholderColor="#4A4947" TextColor="#4A4947" FontFamily="NexaTextLight" FontSize="15" BackgroundColor="#D8D2C2" IsPassword="True" HeightRequest="55" Margin="0,0,0,10" />
+            <Label x:Name="ErrorLabel"  TextColor="#FF6B6B" FontSize="15" IsVisible="False" Margin="0,5,0,10" />
+            <Button Text="ЗАРЕГИСТРИРОВАТЬСЯ" BackgroundColor="#B17457" TextColor="#D8D2C2" FontAttributes="Bold" FontSize="18" FontFamily="Vetrino" HeightRequest="56" CornerRadius="29" Margin="0,15,0,15" Clicked="RegisterButton_Clicked" />
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
-                <Label Text="Уже есть аккаунт?" TextColor="#AAAAAA" FontSize="14" VerticalOptions="Center" />
-                <Button Text="Войти" TextColor="White" BackgroundColor="Transparent" FontAttributes="Bold" FontSize="14" Padding="0" Clicked="LoginButton_Clicked" />
+                <Label Text="Уже есть аккаунт?" TextColor="#D8D2C2" FontSize="14" FontFamily="NexaTextLight" VerticalOptions="Center" />
+                <Button Text="Войти" TextColor="#F9F7F0" FontFamily="NexaTextLight" BackgroundColor="Transparent" FontAttributes="Bold" FontSize="14" Padding="0" Clicked="LoginButton_Clicked" />
 
             </HorizontalStackLayout>
 

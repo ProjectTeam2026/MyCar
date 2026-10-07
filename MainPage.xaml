@@ -16,8 +16,9 @@
                 WidthRequest="220"
                 HeightRequest="60"
                 CornerRadius="30"
-                BackgroundColor="White"
-                TextColor="Black"
+                BackgroundColor="#F9F7F0"
+                TextColor="#4A4947"
+                FontFamily="Vetrino"
                 FontSize="30" />
 
         <VerticalStackLayout x:Name="AuthButtons"
@@ -32,8 +33,9 @@
                     WidthRequest="240"
                     HeightRequest="56"
                     CornerRadius="28"
-                    BackgroundColor="White"
-                    TextColor="Black"
+                    BackgroundColor="#F9F7F0"
+                    TextColor="#4A4947"
+                    FontFamily="NexaTextLight"
                     FontSize="18" />
 
             <Button Text="Зарегистрироваться"
@@ -42,9 +44,9 @@
                     HeightRequest="56"
                     CornerRadius="28"
                     BackgroundColor="Transparent"
-                    BorderColor="White"
+                    BorderColor="#F9F7F0"
                     BorderWidth="1"
-                    TextColor="White"
+                    TextColor="#F9F7F0"
                     FontSize="18" />
         </VerticalStackLayout>
     </Grid>
