@@ -6,67 +6,135 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
 
-
+       
         <VerticalStackLayout Grid.Row="0"
-                         Padding="30,80,30,40"
-                         Spacing="8">
+                             Padding="30,80,30,40"
+                             Spacing="8">
 
             <Label Text="МОЙ ГАРАЖ"
-               FontSize="12"
-               CharacterSpacing="4"
-               TextColor="#B17457"
-               HorizontalOptions="Center" />
+                   FontSize="12"
+                   CharacterSpacing="4"
+                   TextColor="#B17457"
+                   HorizontalOptions="Center" />
 
             <Label Text="Автомобиль"
-               FontSize="42"
-               TextColor="#4A4947"
-               HorizontalOptions="Center" />
+                   FontSize="42"
+                   TextColor="#4A4947"
+                   HorizontalOptions="Center" />
 
             <BoxView HeightRequest="1"
-                 WidthRequest="60"
-                 Color="#D8D2C2"
-                 HorizontalOptions="Center"
-                 Margin="0,12,0,0" />
+                     WidthRequest="60"
+                     Color="#D8D2C2"
+                     HorizontalOptions="Center"
+                     Margin="0,12,0,0" />
         </VerticalStackLayout>
 
+        
+        <CollectionView Grid.Row="1"
+                        x:Name="CarsCollectionView"
+                        Margin="30,0,30,20"
+                        SelectionMode="None">
 
-        <VerticalStackLayout Grid.Row="1"
-                         VerticalOptions="Center"
-                         Padding="30"
-                         Spacing="10">
-            <Label Text="Пока пусто"
-               FontSize="16"
-               TextColor="#D8D2C2"
-               HorizontalOptions="Center" />
-            <Label Text="Добавьте свой первый автомобиль"
-               FontSize="14"
-               TextColor="#D8D2C2"
-               HorizontalOptions="Center" />
-        </VerticalStackLayout>
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                    <Label Text="Пока пусто"
+                           FontSize="16"
+                           TextColor="#D8D2C2"
+                           HorizontalOptions="Center" />
+                    <Label Text="Добавьте свой первый автомобиль"
+                           FontSize="14"
+                           TextColor="#D8D2C2"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
 
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,0,0,14"
+                            Padding="18"
+                            Stroke="#D8D2C2"
+                            StrokeThickness="1"
+                            BackgroundColor="#FDFCF8"
+                            StrokeShape="RoundRectangle 20">
 
+                        <Grid RowDefinitions="Auto,Auto,Auto"
+                              ColumnDefinitions="Auto,*"
+                              RowSpacing="6"
+                              ColumnSpacing="14">
+
+                            <Border Grid.Row="0" Grid.RowSpan="3"
+                                    Grid.Column="0"
+                                    WidthRequest="56"
+                                    HeightRequest="56"
+                                    StrokeThickness="0"
+                                    BackgroundColor="#B17457"
+                                    StrokeShape="RoundRectangle 28"
+                                    VerticalOptions="Center">
+                                <Label Text="{Binding MarkInitial}"
+                                       FontSize="22"
+                                       FontAttributes="Bold"
+                                       TextColor="#F9F7F0"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+
+                            <Label Grid.Row="0" Grid.Column="1"
+                                   Text="{Binding Mark}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#4A4947" />
+
+                            <Label Grid.Row="1" Grid.Column="1"
+                                   FontSize="14"
+                                   TextColor="#7A7876">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Номер: " FontAttributes="Bold" />
+                                        <Span Text="{Binding Number}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label Grid.Row="2" Grid.Column="1"
+                                   FontSize="14"
+                                   TextColor="#7A7876">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Цвет: " FontAttributes="Bold" />
+                                        <Span Text="{Binding Color}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+       
         <VerticalStackLayout Grid.Row="2"
-                         Padding="30,0,30,60"
-                         Spacing="14">
+                             Padding="30,0,30,60"
+                             Spacing="14">
 
             <Button Text="Список авто"
-                FontSize="16"
-                HeightRequest="58"
-                CornerRadius="29"
-                BackgroundColor="#4A4947"
-                TextColor="#F9F7F0"
-                BorderWidth="0"
-                Clicked="OnCarListClicked" />
+                    FontSize="16"
+                    HeightRequest="58"
+                    CornerRadius="29"
+                    BackgroundColor="#4A4947"
+                    TextColor="#F9F7F0"
+                    BorderWidth="0"
+                    Clicked="OnCarListClicked" />
 
             <Button Text="Добавить авто"
-                FontSize="16"
-                FontAttributes="Bold"
-                HeightRequest="58"
-                CornerRadius="29"
-                BackgroundColor="#B17457"
-                TextColor="#F9F7F0"
-                BorderWidth="0"
-                Clicked="OnAddCarClicked" />
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HeightRequest="58"
+                    CornerRadius="29"
+                    BackgroundColor="#B17457"
+                    TextColor="#F9F7F0"
+                    BorderWidth="0"
+                    Clicked="OnAddCarClicked" />
         </VerticalStackLayout>
 
     </Grid>
