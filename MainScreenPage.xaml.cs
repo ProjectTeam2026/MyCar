@@ -7,9 +7,9 @@ public partial class MainScreenPage : ContentPage
 		InitializeComponent();
 	}
 
-    private void GaragePage_Tapped(object sender, TappedEventArgs e)
+    private async void GaragePage_Tapped(object sender, TappedEventArgs e)
     {
-
+        await Shell.Current.GoToAsync(nameof(GaragePage));
     }
 
     private void ServiceAppointment_Tapped(object sender, TappedEventArgs e)
