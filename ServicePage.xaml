@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MyCar.ServicePage"
+    Title="Сервис"
+    BackgroundColor="#F9F7F0">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20" Spacing="16">
+
+                <Label
+                    Text="Сервис"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    TextColor="#4A4947" />
+
+                <Label
+                    Text="Заправки и станции технического обслуживания"
+                    FontSize="14"
+                    TextColor="#4A4947" />
+
+                <Label
+                    Text="Выбери город"
+                    TextColor="#4A4947" />
+
+                <Picker
+                    x:Name="CityPicker"
+                    Title="Выбрать город"
+                    SelectedIndex="0"
+                    BackgroundColor="White"
+                    TextColor="#4A4947"
+                    SelectedIndexChanged="OnCityChanged">
+                    <Picker.Items>
+                        <x:String>Москва</x:String>
+                        <x:String>Санкт-Петербург</x:String>
+                        <x:String>Казань</x:String>
+                        <x:String>Сочи</x:String>
+                        <x:String>Екатеринбург</x:String>
+                    </Picker.Items>
+                </Picker>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+
+                    <Button
+                        x:Name="FuelTab"
+                        Grid.Column="0"
+                        Text="Заправки"
+                        BackgroundColor="#B17457"
+                        TextColor="White"
+                        CornerRadius="12"
+                        Clicked="OnFuelTabClicked" />
+
+                    <Button
+                        x:Name="ServiceTab"
+                        Grid.Column="1"
+                        Text="СТО"
+                        BackgroundColor="#D8D2C2"
+                        TextColor="#4A4947"
+                        CornerRadius="12"
+                        Clicked="OnServiceTabClicked" />
+
+                </Grid>
+
+                <ActivityIndicator
+                    x:Name="LoadingIndicator"
+                    IsVisible="False"
+                    IsRunning="False"
+                    Color="#B17457"
+                    HorizontalOptions="Center" />
+
+                <Label
+                    x:Name="StatusLabel"
+                    Text="Загружаем данные..."
+                    TextColor="#4A4947"
+                    HorizontalTextAlignment="Center" />
+
+                <CollectionView
+                    x:Name="PlacesList"
+                    SelectionMode="None">
+
+                    <CollectionView.EmptyView>
+                        <Label
+                            Text="Объекты не найдены"
+                            TextColor="#4A4947"
+                            HorizontalTextAlignment="Center"
+                            Margin="10" />
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                BackgroundColor="White"
+                                Stroke="#D8D2C2"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 16"
+                                Padding="14"
+                                Margin="0,4">
+
+                                <VerticalStackLayout Spacing="7">
+
+                                    <Label
+                                        Text="{Binding Name}"
+                                        FontSize="17"
+                                        FontAttributes="Bold"
+                                        TextColor="#4A4947" />
+
+                                    <Label
+                                        Text="{Binding DisplayType}"
+                                        FontSize="13"
+                                        TextColor="#B17457" />
+
+                                    <Label
+                                        Text="{Binding Address}"
+                                        FontSize="14"
+                                        TextColor="#4A4947" />
+
+                                    <Label
+                                        Text="{Binding Coordinates}"
+                                        FontSize="12"
+                                        TextColor="#77736C" />
+
+                                    <Button
+                                        Text="Открыть на карте"
+                                        BackgroundColor="#D8D2C2"
+                                        TextColor="#4A4947"
+                                        CornerRadius="10"
+                                        CommandParameter="{Binding .}"
+                                        Clicked="OnOpenMapClicked" />
+
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+                <Label
+                    Text="© OpenStreetMap contributors"
+                    FontSize="11"
+                    TextColor="#4A4947"
+                    HorizontalTextAlignment="Center" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid
+            Grid.Row="1"
+            BackgroundColor="#4A4947"
+            Padding="8,12"
+            ColumnDefinitions="*,*,*">
+
+            <Label
+                Grid.Column="0"
+                Text="Главная"
+                TextColor="#F9F7F0"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                Grid.Column="1"
+                Text="Сервис"
+                TextColor="#D8D2C2"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                Grid.Column="2"
+                Text="Профиль"
+                TextColor="#F9F7F0"
+                HorizontalTextAlignment="Center" />
+
+        </Grid>
+
+    </Grid>
+</ContentPage>
