@@ -71,18 +71,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="AddCarPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="GaragePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MainScreenPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="ServicePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
 	</ItemGroup>
 
 </Project>
