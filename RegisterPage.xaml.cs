@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using System.Text;
+
 namespace MyCar;
 
 public partial class RegisterPage : ContentPage
@@ -59,13 +62,49 @@ public partial class RegisterPage : ContentPage
             return;
         }
 
-        await DisplayAlert(
-            "Готово!",
-            "Регистрация успешно завершена",
-            "Продолжить"
-        );
+        try
+        {
+            var registerButton = (Button)sender;
+            registerButton.IsEnabled = false;
+            registerButton.Text = "ОТПРАВКА...";
 
-        await Navigation.PopAsync();
+            var request = new RegisterRequest
+            {
+                Name = name,
+                Email = email,
+                Password = password,
+                Phone = phone
+            };
+
+            using var client = new HttpClient();
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync(
+                "https://mycarapi-lyubovchernyshova.msk1.amvera.tech/api/Auth/register",
+                content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("Готово!", "Регистрация успешно завершена", "Продолжить");
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                ShowError($"Ошибка сервера: {error}");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Ошибка подключения: {ex.Message}");
+        }
+        finally
+        {
+            var registerButton = (Button)sender;
+            registerButton.IsEnabled = true;
+            registerButton.Text = "ЗАРЕГИСТРИРОВАТЬСЯ";
+        }
     }
 
     private async void LoginButton_Clicked(object sender, EventArgs e)
