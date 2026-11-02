@@ -9,6 +9,7 @@
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(GaragePage), typeof(GaragePage));
+            Routing.RegisterRoute(nameof(ServicePage), typeof(ServicePage));
         }
     }
 }

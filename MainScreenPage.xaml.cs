@@ -32,9 +32,9 @@ public partial class MainScreenPage : ContentPage
 
     }
 
-    private void ServicePage_Tapped(object sender, TappedEventArgs e)
+    private async void ServicePage_Tapped(object sender, TappedEventArgs e)
     {
-
+        await Shell.Current.GoToAsync(nameof(ServicePage));
     }
 
     private void NewsPage_Tapped(object sender, TappedEventArgs e)
