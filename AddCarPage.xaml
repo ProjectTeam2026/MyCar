@@ -2,39 +2,45 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyCar.AddCarPage"
-             BackgroundColor="#F9F7F0"
+             BackgroundColor="#323232"
              Title="Добавить автомобиль">
     <ScrollView>
-        <VerticalStackLayout Padding="30,40,30,40" Spacing="20">
+        <VerticalStackLayout Padding="30,40,30,60" Spacing="20">
+
             <Label Text="Новый автомобиль"
-                   FontSize="28"
-                   TextColor="#4A4947"
-                   HorizontalOptions="Center"
+                   FontFamily="Vetrino"
+                   FontSize="32"
+                   TextColor="#F9F7F0"
                    Margin="0,0,0,10" />
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Гос. номер" TextColor="#4A4947" FontAttributes="Bold" />
-                <Border Stroke="#D8D2C2" StrokeThickness="1" BackgroundColor="#F9F7F0" Padding="10,0">
+
+            
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Гос. номер" TextColor="#D8D2C2" FontFamily="NexaTextLight" FontSize="14" />
+                <Border Stroke="#4A4947" StrokeThickness="1" BackgroundColor="#3C3A39" Padding="12,0">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
+                        <RoundRectangle CornerRadius="12" />
                     </Border.StrokeShape>
                     <Entry x:Name="EntryPlate"
                            Placeholder="А123БВ777"
-                           TextColor="#4A4947"
-                           PlaceholderColor="#D8D2C2"
+                           FontFamily="NexaTextLight"
+                           TextColor="#F9F7F0"
+                           PlaceholderColor="#797775"
                            BackgroundColor="Transparent" />
                 </Border>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Марка" TextColor="#4A4947" FontAttributes="Bold" />
-                <Border Stroke="#D8D2C2" StrokeThickness="1" BackgroundColor="#F9F7F0" Padding="10,0">
+            
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Марка" TextColor="#D8D2C2" FontFamily="NexaText" FontSize="14" />
+                <Border Stroke="#4A4947" StrokeThickness="1" BackgroundColor="#3C3A39" Padding="12,0">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
+                        <RoundRectangle CornerRadius="12" />
                     </Border.StrokeShape>
                     <Picker x:Name="PickerBrand"
-                            Title="Нажмите, чтобы выбрать"
-                            TextColor="#4A4947"
-                            TitleColor="#D8D2C2"
+                            Title="Выберите марку"
+                            FontFamily="NexaTextLight"
+                            TextColor="#F9F7F0"
+                            TitleColor="#797775"
                             BackgroundColor="Transparent">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
@@ -53,66 +59,76 @@
                 </Border>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Модель" TextColor="#4A4947" FontAttributes="Bold" />
-                <Border Stroke="#D8D2C2" StrokeThickness="1" BackgroundColor="#F9F7F0" Padding="10,0">
+            
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Модель" TextColor="#D8D2C2" FontFamily="NexaTextLight" FontSize="14" />
+                <Border Stroke="#4A4947" StrokeThickness="1" BackgroundColor="#3C3A39" Padding="12,0">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
+                        <RoundRectangle CornerRadius="12" />
                     </Border.StrokeShape>
                     <Entry x:Name="EntryModel"
                            Placeholder="Camry, X5, Solaris..."
-                           TextColor="#4A4947"
-                           PlaceholderColor="#D8D2C2"
-                           BackgroundColor="Transparent" />
-                </Border>
-            </VerticalStackLayout>
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Год выпуска" TextColor="#4A4947" FontAttributes="Bold" />
-                <Border Stroke="#D8D2C2" StrokeThickness="1" BackgroundColor="#F9F7F0" Padding="10,0">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
-                    </Border.StrokeShape>
-                    <Entry x:Name="EntryYear" Placeholder="2020"
-                           Keyboard="Numeric"
-                           MaxLength="4"
-                           TextColor="#4A4947"
-                           PlaceholderColor="#D8D2C2"
+                           FontFamily="NexaTextLight"
+                           TextColor="#F9F7F0"
+                           PlaceholderColor="#797775"
                            BackgroundColor="Transparent" />
                 </Border>
             </VerticalStackLayout>
 
-      
-            <VerticalStackLayout Spacing="5">
-                <Label Text="VIN (необязательно)" TextColor="#4A4947" FontAttributes="Bold" />
-                <Border Stroke="#D8D2C2" StrokeThickness="1" BackgroundColor="#F9F7F0" Padding="10,0">
+            
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Год выпуска" TextColor="#D8D2C2" FontFamily="NexaTextLight" FontSize="14" />
+                <Border Stroke="#4A4947" StrokeThickness="1" BackgroundColor="#3C3A39" Padding="12,0">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+                    <Entry x:Name="EntryYear" 
+                           Placeholder="2020"
+                           Keyboard="Numeric"
+                           MaxLength="4"
+                           FontFamily="NexaTextLight"
+                           TextColor="#F9F7F0"
+                           PlaceholderColor="#797775"
+                           BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout Spacing="6">
+                <Label Text="VIN (необязательно)" TextColor="#D8D2C2" FontFamily="NexaTextLight" FontSize="14" />
+                <Border Stroke="#4A4947" StrokeThickness="1" BackgroundColor="#3C3A39" Padding="12,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
                     </Border.StrokeShape>
                     <Entry x:Name="EntryVin"
                            Placeholder="17 символов"
                            MaxLength="17"
-                           TextColor="#4A4947"
-                           PlaceholderColor="#D8D2C2"
+                           FontFamily="NexaTextLight"
+                           TextColor="#F9F7F0"
+                           PlaceholderColor="#797775"
                            BackgroundColor="Transparent" />
                 </Border>
             </VerticalStackLayout>
 
-          
-            <VerticalStackLayout Spacing="5">
-                <Label Text="ПТС (необязательно)" TextColor="#4A4947" FontAttributes="Bold" />
-                <Border Stroke="#D8D2C2" StrokeThickness="1" BackgroundColor="#F9F7F0" Padding="10,0">
+            
+            <VerticalStackLayout Spacing="6">
+                <Label Text="ПТС (необязательно)" TextColor="#D8D2C2" FontFamily="NexaText" FontSize="14" />
+                <Border Stroke="#4A4947" StrokeThickness="1" BackgroundColor="#3C3A39" Padding="12,0">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
+                        <RoundRectangle CornerRadius="12" />
                     </Border.StrokeShape>
                     <Entry x:Name="EntryPts"
                            Placeholder="77 АА 123456"
-                           TextColor="#4A4947"
-                           PlaceholderColor="#D8D2C2"
+                           FontFamily="NexaTextLight"
+                           TextColor="#F9F7F0"
+                           PlaceholderColor="#797775"
                            BackgroundColor="Transparent" />
                 </Border>
             </VerticalStackLayout>
 
-            <Button Text="Добавить авто"
+            
+            <Button Text="Сохранить авто"
+                    FontFamily="NexaTextLight"
                     FontSize="16"
                     FontAttributes="Bold"
                     HeightRequest="58"

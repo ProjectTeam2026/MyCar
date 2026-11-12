@@ -1,142 +1,179 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:shapes="clr-namespace:Microsoft.Maui.Controls.Shapes;assembly=Microsoft.Maui.Controls"
              x:Class="MyCar.GaragePage"
-             Title="GaragePage">
+             BackgroundColor="#323232"
+             Title="Мой гараж">
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*,Auto,Auto">
 
-       
-        <VerticalStackLayout Grid.Row="0"
-                             Padding="30,80,30,40"
-                             Spacing="8">
-
-            <Label Text="МОЙ ГАРАЖ"
-                   FontSize="12"
-                   CharacterSpacing="4"
-                   TextColor="#B17457"
-                   HorizontalOptions="Center" />
-
-            <Label Text="Автомобиль"
-                   FontSize="42"
-                   TextColor="#4A4947"
-                   HorizontalOptions="Center" />
-
-            <BoxView HeightRequest="1"
-                     WidthRequest="60"
-                     Color="#D8D2C2"
-                     HorizontalOptions="Center"
-                     Margin="0,12,0,0" />
+        
+        <VerticalStackLayout Grid.Row="0" Padding="30,60,30,20" Spacing="4">
+            <Label Text="Мой гараж"
+                   FontFamily="Vetrino" 
+                   FontSize="36"
+                   TextColor="#F9F7F0"
+                   HorizontalOptions="Start" />
+            <Label Text="Ваши автомобили"
+                   FontFamily="NexaTextLight"
+                   FontSize="16"
+                   TextColor="#D8D2C2"
+                   HorizontalOptions="Start" />
         </VerticalStackLayout>
 
         
         <CollectionView Grid.Row="1"
                         x:Name="CarsCollectionView"
-                        Margin="30,0,30,20"
+                        Margin="30,10,30,10"
                         SelectionMode="None">
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout VerticalOptions="Center" Spacing="10">
                     <Label Text="Пока пусто"
-                           FontSize="16"
+                           FontSize="18"
+                           FontFamily="NexaTextLight"
                            TextColor="#D8D2C2"
                            HorizontalOptions="Center" />
                     <Label Text="Добавьте свой первый автомобиль"
                            FontSize="14"
-                           TextColor="#D8D2C2"
+                           FontFamily="NexaTextLight"
+                           TextColor="#797775"
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="0,0,0,14"
-                            Padding="18"
-                            Stroke="#D8D2C2"
+                    <Border Margin="0,0,0,16"
+                            Padding="20"
+                            Stroke="#4A4947"
                             StrokeThickness="1"
-                            BackgroundColor="#FDFCF8"
+                            BackgroundColor="#3C3A39"
                             StrokeShape="RoundRectangle 20">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
 
-                        <Grid RowDefinitions="Auto,Auto,Auto"
-                              ColumnDefinitions="Auto,*"
-                              RowSpacing="6"
-                              ColumnSpacing="14">
-
-                            <Border Grid.Row="0" Grid.RowSpan="3"
-                                    Grid.Column="0"
-                                    WidthRequest="56"
-                                    HeightRequest="56"
+                            
+                            <Border Grid.RowSpan="2" Grid.Column="0"
+                                    WidthRequest="50" HeightRequest="50"
                                     StrokeThickness="0"
-                                    BackgroundColor="#B17457"
-                                    StrokeShape="RoundRectangle 28"
+                                    BackgroundColor="#323232"
+                                    StrokeShape="RoundRectangle 16"
                                     VerticalOptions="Center">
-                                <Label Text="{Binding MarkInitial}"
-                                       FontSize="22"
-                                       FontAttributes="Bold"
-                                       TextColor="#F9F7F0"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
+                                <Path Data="M 10 20 L 30 20 L 35 12 L 45 12 L 50 20 L 55 20 A 5 5 0 0 1 55 30 L 5 30 A 5 5 0 0 1 5 20 Z" 
+                                      Fill="#D8D2C2" 
+                                      Aspect="Uniform" 
+                                      HorizontalOptions="Center" 
+                                      VerticalOptions="Center" 
+                                      WidthRequest="24" HeightRequest="24"/>
                             </Border>
 
                             <Label Grid.Row="0" Grid.Column="1"
                                    Text="{Binding Mark}"
+                                   FontFamily="NexaTextLight"
                                    FontSize="18"
                                    FontAttributes="Bold"
-                                   TextColor="#4A4947" />
+                                   TextColor="#F9F7F0"
+                                   VerticalOptions="End" />
 
-                            <Label Grid.Row="1" Grid.Column="1"
-                                   FontSize="14"
-                                   TextColor="#7A7876">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Номер: " FontAttributes="Bold" />
-                                        <Span Text="{Binding Number}" />
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-
-                            <Label Grid.Row="2" Grid.Column="1"
-                                   FontSize="14"
-                                   TextColor="#7A7876">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Цвет: " FontAttributes="Bold" />
-                                        <Span Text="{Binding Color}" />
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                                <Label FontSize="12" FontFamily="NexaTextLight" TextColor="#D8D2C2">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Year}"/>
+                                            <Span Text=" • "/>
+                                            <Span Text="{Binding BodyType}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="{Binding Number}" FontSize="14" FontFamily="NexaTextLight" TextColor="#B17457" />
+                            </VerticalStackLayout>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-       
-        <VerticalStackLayout Grid.Row="2"
-                             Padding="30,0,30,60"
-                             Spacing="14">
-
+        
+        <VerticalStackLayout Grid.Row="2" Padding="30,0,30,10" Spacing="12">
             <Button Text="Список авто"
+                    FontFamily="NexaTextLight"
                     FontSize="16"
-                    HeightRequest="58"
-                    CornerRadius="29"
-                    BackgroundColor="#4A4947"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    BackgroundColor="#3C3A39"
                     TextColor="#F9F7F0"
-                    BorderWidth="0"
+                    BorderWidth="1"
+                    BorderColor="#4A4947"
                     Clicked="OnCarListClicked" />
 
             <Button Text="Добавить авто"
+                    FontFamily="NexaTextLight"
                     FontSize="16"
                     FontAttributes="Bold"
-                    HeightRequest="58"
-                    CornerRadius="29"
+                    HeightRequest="50"
+                    CornerRadius="25"
                     BackgroundColor="#B17457"
                     TextColor="#F9F7F0"
                     BorderWidth="0"
                     Clicked="OnAddCarClicked" />
         </VerticalStackLayout>
 
-    </Grid>
+        
+        <Border Grid.Row="3"
+                Margin="20,10,20,30"
+                BackgroundColor="#B17457"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 45"
+                Padding="10">
+            <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5">
 
+                
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="65" WidthRequest="60">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="GaragePage_Tapped"/>
+                    </Border.GestureRecognizers>
+                    <Grid RowDefinitions="*,*">
+                        <Image Source="car2.png" Grid.Row="0" Margin="0,5,0,0" HeightRequest="24"/>
+                        <Label Grid.Row="1" Text="Гараж" TextColor="#F9F7F0" FontSize="12" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    </Grid>
+                </Border>
+
+                
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="65" WidthRequest="60">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ServicePage_Tapped"/>
+                    </Border.GestureRecognizers>
+                    <Grid RowDefinitions="*,*">
+                        <Image Source="service2.png" Grid.Row="0" Margin="0,5,0,0" HeightRequest="24"/>
+                        <Label Grid.Row="1" Text="Сервис" TextColor="#F9F7F0" FontSize="12" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    </Grid>
+                </Border>
+
+               
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="65" WidthRequest="60">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="NewsPage_Tapped"/>
+                    </Border.GestureRecognizers>
+                    <Grid RowDefinitions="*,*">
+                        <Image Source="news2.png" Grid.Row="0" Margin="0,5,0,0" HeightRequest="24"/>
+                        <Label Grid.Row="1" Text="Лента" TextColor="#F9F7F0" FontSize="12" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    </Grid>
+                </Border>
+
+                
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="65" WidthRequest="60">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ProfilePage_Tapped"/>
+                    </Border.GestureRecognizers>
+                    <Grid RowDefinitions="*,*">
+                        <Image Source="profile.png" Grid.Row="0" Margin="0,5,0,0" HeightRequest="24"/>
+                        <Label Grid.Row="1" Text="Профиль" TextColor="#F9F7F0" FontSize="12" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    </Grid>
+                </Border>
+
+            </HorizontalStackLayout>
+        </Border>
+
+    </Grid>
 </ContentPage>
