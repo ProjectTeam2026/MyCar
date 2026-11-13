@@ -109,12 +109,7 @@ public partial class RegisterPage : ContentPage
 
     private async void LoginButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
-    }
-
-    private async void BackButton_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PopAsync();
+        await Navigation.PushAsync(new LoginPage());
     }
 
     private void ShowError(string message)

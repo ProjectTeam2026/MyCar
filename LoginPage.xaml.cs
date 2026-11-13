@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using System.Text;
+
 namespace MyCar;
 
 public partial class LoginPage : ContentPage
@@ -32,21 +35,51 @@ public partial class LoginPage : ContentPage
             return;
         }
 
-        await DisplayAlert(
-            "Успешно",
-            "Вы вошли в аккаунт",
-            "Продолжить"
-        );
+        try
+        {
+            var loginButton = (Button)sender;
+            loginButton.IsEnabled = false;
+            loginButton.Text = "ВХОД...";
+
+            var request = new
+            {
+                Email = login,
+                Password = password
+            };
+
+            using var client = new HttpClient();
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync(
+                "https://mycarapi-lyubovchernyshova.msk1.amvera.tech/api/Auth/login",
+                content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await Navigation.PushAsync(new MainScreenPage());
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                ShowError($"Ошибка: {error}");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Ошибка подключения: {ex.Message}");
+        }
+        finally
+        {
+            var loginButton = (Button)sender;
+            loginButton.IsEnabled = true;
+            loginButton.Text = "ВОЙТИ";
+        }
     }
 
     private async void RegisterButton_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new RegisterPage());
-    }
-
-    private async void BackButton_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PopAsync();
     }
 
     private void ShowError(string message)

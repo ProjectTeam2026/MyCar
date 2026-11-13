@@ -12,7 +12,6 @@
             Padding="25,20,25,30"
             Spacing="0">
 
-            <Button Text="‹" FontSize="40" FontFamily="Vetrino" TextColor="#F9F7F0" BackgroundColor="Transparent" HorizontalOptions="Start" Padding="0" Clicked="BackButton_Clicked" />
             <Label Text="Создание аккаунта" TextColor="#F9F7F0" FontSize="30" FontFamily="Vetrino" Margin="0,15,0,8" />
             <Label Text="Заполните данные, чтобы зарегистрироваться" TextColor="#F9F7F0" FontSize="15" FontFamily="NexaTextLight" Margin="0,0,0,25" />
             <Label Text="Имя" TextColor="#D8D2C2" FontSize="15" FontFamily="NexaTextLight" Margin="0,0,0,7" />
