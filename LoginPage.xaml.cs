@@ -57,7 +57,10 @@ public partial class LoginPage : ContentPage
 
             if (response.IsSuccessStatusCode)
             {
-                await Navigation.PushAsync(new MainScreenPage());
+                if (Application.Current?.Windows.Count > 0)
+                {
+                    Application.Current.Windows[0].Page = new MainScreenPage();
+                }
             }
             else
             {
@@ -79,7 +82,10 @@ public partial class LoginPage : ContentPage
 
     private async void RegisterButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new RegisterPage());
+        if (Application.Current?.Windows.Count > 0)
+        {
+            Application.Current.Windows[0].Page = new RegisterPage();
+        }
     }
 
     private void ShowError(string message)

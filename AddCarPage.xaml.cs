@@ -34,4 +34,12 @@ public partial class AddCarPage : ContentPage
   
         await Shell.Current.GoToAsync("..");
     }
+
+    private void BackButton_Clicked(object sender, EventArgs e)
+    {
+        if (Application.Current?.Windows.Count > 0)
+        {
+            Application.Current.Windows[0].Page = new GaragePage();
+        }
+    }
 }

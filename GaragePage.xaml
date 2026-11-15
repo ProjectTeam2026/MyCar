@@ -8,7 +8,6 @@
 
     <Grid RowDefinitions="Auto,*,Auto,Auto">
 
-        
         <VerticalStackLayout Grid.Row="0" Padding="30,60,30,20" Spacing="4">
             <Label Text="Мой гараж"
                    FontFamily="Vetrino" 
@@ -22,7 +21,6 @@
                    HorizontalOptions="Start" />
         </VerticalStackLayout>
 
-        
         <CollectionView Grid.Row="1"
                         x:Name="CarsCollectionView"
                         Margin="30,10,30,10"
@@ -53,7 +51,6 @@
                             StrokeShape="RoundRectangle 20">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16" RowDefinitions="Auto,Auto">
 
-                            
                             <Border Grid.RowSpan="2" Grid.Column="0"
                                     WidthRequest="50" HeightRequest="50"
                                     StrokeThickness="0"
@@ -94,7 +91,6 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        
         <VerticalStackLayout Grid.Row="2" Padding="30,0,30,10" Spacing="12">
             <Button Text="Список авто"
                     FontFamily="NexaTextLight"
@@ -113,67 +109,84 @@
                     FontAttributes="Bold"
                     HeightRequest="50"
                     CornerRadius="25"
-                    BackgroundColor="#B17457"
-                    TextColor="#F9F7F0"
+                    BackgroundColor="#D8D2C2"
+                    TextColor="#4A4947"
                     BorderWidth="0"
                     Clicked="OnAddCarClicked" />
         </VerticalStackLayout>
 
-        
-        <Border Grid.Row="3"
-                Margin="20,10,20,30"
-                BackgroundColor="#B17457"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 45"
-                Padding="10">
-            <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5">
-
-                
-                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="65" WidthRequest="60">
+        <Border Grid.Row="3" Margin="5,30,5,20" BackgroundColor="#B17457" StrokeThickness="0" StrokeShape="RoundRectangle 45" Padding="10">
+            <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Margin="10,0,10,0" Spacing="10">
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="75" WidthRequest="65">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="GaragePage_Tapped"/>
+                        <TapGestureRecognizer Tapped="Home_Tapped"/>
                     </Border.GestureRecognizers>
-                    <Grid RowDefinitions="*,*">
-                        <Image Source="car2.png" Grid.Row="0" Margin="0,5,0,0" HeightRequest="24"/>
-                        <Label Grid.Row="1" Text="Гараж" TextColor="#F9F7F0" FontSize="12" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Source="home.png" Grid.Row="0" Margin="0,6,0,5"/>
+                        <Label Grid.Row="1" Text="Главная" TextColor="#F9F7F0" FontSize="16" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </Grid>
                 </Border>
 
-                
-                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="65" WidthRequest="60">
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="75" WidthRequest="60">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ServicePage_Tapped"/>
+                        <TapGestureRecognizer Tapped="Garage_Tapped"/>
                     </Border.GestureRecognizers>
-                    <Grid RowDefinitions="*,*">
-                        <Image Source="service2.png" Grid.Row="0" Margin="0,5,0,0" HeightRequest="24"/>
-                        <Label Grid.Row="1" Text="Сервис" TextColor="#F9F7F0" FontSize="12" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Source="car2.png" Grid.Row="0" Margin="0,2,0,3"/>
+                        <Label Grid.Row="1" Text="Гараж" TextColor="#F9F7F0" FontSize="16" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </Grid>
                 </Border>
 
-               
-                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="65" WidthRequest="60">
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="75" WidthRequest="60">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="NewsPage_Tapped"/>
+                        <TapGestureRecognizer Tapped="Service_Tapped"/>
                     </Border.GestureRecognizers>
-                    <Grid RowDefinitions="*,*">
-                        <Image Source="news2.png" Grid.Row="0" Margin="0,5,0,0" HeightRequest="24"/>
-                        <Label Grid.Row="1" Text="Лента" TextColor="#F9F7F0" FontSize="12" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Source="service2.png" Grid.Row="0" Margin="0,7,0,6"/>
+                        <Label Grid.Row="1" Text="Сервис" TextColor="#F9F7F0" FontSize="16" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </Grid>
                 </Border>
 
-                
-                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="65" WidthRequest="60">
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="75" WidthRequest="60">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ProfilePage_Tapped"/>
+                        <TapGestureRecognizer Tapped="News_Tapped"/>
                     </Border.GestureRecognizers>
-                    <Grid RowDefinitions="*,*">
-                        <Image Source="profile.png" Grid.Row="0" Margin="0,5,0,0" HeightRequest="24"/>
-                        <Label Grid.Row="1" Text="Профиль" TextColor="#F9F7F0" FontSize="12" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Source="news2.png" Grid.Row="0" Margin="0,7,0,6"/>
+                        <Label Grid.Row="1" Text="Лента" TextColor="#F9F7F0" FontSize="16" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </Grid>
                 </Border>
 
+                <Border StrokeThickness="0" Stroke="Transparent" HeightRequest="75" WidthRequest="75">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Profile_Tapped"/>
+                    </Border.GestureRecognizers>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Source="profile.png" Grid.Row="0" Margin="0,7,0,5"/>
+                        <Label Grid.Row="1" Text="Профиль" TextColor="#F9F7F0" FontSize="16" FontFamily="NexaTextLight" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    </Grid>
+                </Border>
             </HorizontalStackLayout>
         </Border>
-
     </Grid>
 </ContentPage>

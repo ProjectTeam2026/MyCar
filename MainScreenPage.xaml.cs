@@ -5,11 +5,6 @@ public partial class MainScreenPage : ContentPage
 	public MainScreenPage()
 	{
 		InitializeComponent();
-	}
-
-    private async void GaragePage_Tapped(object sender, TappedEventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(GaragePage));
     }
 
     private void ServiceAppointment_Tapped(object sender, TappedEventArgs e)
@@ -32,18 +27,45 @@ public partial class MainScreenPage : ContentPage
 
     }
 
-    private async void ServicePage_Tapped(object sender, TappedEventArgs e)
+    private void Home_Tapped(object sender, TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ServicePage));
+        if (Application.Current?.Windows.Count > 0)
+        {
+            Application.Current.Windows[0].Page = new MainScreenPage();
+        }
     }
 
-    private void NewsPage_Tapped(object sender, TappedEventArgs e)
+    private void Garage_Tapped(object sender, TappedEventArgs e)
     {
-
+        if (Application.Current?.Windows.Count > 0)
+        {
+            Application.Current.Windows[0].Page = new GaragePage();
+        }
     }
 
-    private void ProfilePage_Tapped(object sender, TappedEventArgs e)
+    private void Service_Tapped(object sender, TappedEventArgs e)
     {
-
+        if (Application.Current?.Windows.Count > 0)
+        {
+            Application.Current.Windows[0].Page = new ServicePage();
+        }
     }
+
+    private void News_Tapped(object sender, TappedEventArgs e)
+    {
+        if (Application.Current?.Windows.Count > 0)
+        {
+            Application.Current.Windows[0].Page = new NewsPage();
+        }
+    }
+
+    private void Profile_Tapped(object sender, TappedEventArgs e)
+    {
+        if (Application.Current?.Windows.Count > 0)
+        {
+            Application.Current.Windows[0].Page = new ProfilePage();
+        }
+    }
+
+
 }

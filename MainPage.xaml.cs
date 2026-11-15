@@ -52,12 +52,18 @@
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(LoginPage));
+            if (Application.Current?.Windows.Count > 0)
+            {
+                Application.Current.Windows[0].Page = new LoginPage();
+            }
         }
 
         private async void OnRegisterClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(RegisterPage));
+            if (Application.Current?.Windows.Count > 0)
+            {
+                Application.Current.Windows[0].Page = new RegisterPage();
+            }
         }
     }
 }

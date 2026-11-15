@@ -87,7 +87,10 @@ public partial class RegisterPage : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Готово!", "Регистрация успешно завершена", "Продолжить");
-                await Navigation.PopAsync();
+                if (Application.Current?.Windows.Count > 0)
+                {
+                    Application.Current.Windows[0].Page = new LoginPage();
+                }
             }
             else
             {
@@ -109,7 +112,10 @@ public partial class RegisterPage : ContentPage
 
     private async void LoginButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new LoginPage());
+        if (Application.Current?.Windows.Count > 0)
+        {
+            Application.Current.Windows[0].Page = new LoginPage();
+        }
     }
 
     private void ShowError(string message)

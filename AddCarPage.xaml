@@ -7,6 +7,15 @@
     <ScrollView>
         <VerticalStackLayout Padding="30,40,30,60" Spacing="20">
 
+            <Button Text="‹" 
+                    FontSize="40" 
+                    FontFamily="Vetrino" 
+                    TextColor="#F9F7F0" 
+                    BackgroundColor="Transparent" 
+                    HorizontalOptions="Start" 
+                    Padding="0" 
+                    Clicked="BackButton_Clicked" />
+            
             <Label Text="Новый автомобиль"
                    FontFamily="Vetrino"
                    FontSize="32"
