@@ -2,6 +2,7 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ym="clr-namespace:Yandex.MapKit.Maui;assembly=Yandex.MapKit.Maui"
     x:Class="MyCar.ServicePage"
     Title="Сервис"
     BackgroundColor="#F9F7F0">
@@ -9,10 +10,7 @@
     <Grid RowDefinitions="*,Auto">
 
         <ScrollView Grid.Row="0">
-
-            <VerticalStackLayout
-                Padding="20"
-                Spacing="16">
+            <VerticalStackLayout Padding="20" Spacing="16">
 
                 <Label
                     Text="Сервис"
@@ -44,7 +42,6 @@
                         <x:String>Сочи</x:String>
                         <x:String>Екатеринбург</x:String>
                     </Picker.Items>
-
                 </Picker>
 
                 <Grid
@@ -95,6 +92,29 @@
 
                 </Grid>
 
+                <Label
+                    x:Name="MapTitle"
+                    Text="Карта Яндекса"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    TextColor="#4A4947" />
+
+                <Border
+                    x:Name="MapContainer"
+                    Stroke="#D8D2C2"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="0"
+                    HeightRequest="300">
+
+                    <ym:YandexMapView
+                        x:Name="YandexMap"
+                        Center="55.751244, 37.618423"
+                        Zoom="11"
+                        IsClusteringEnabled="True" />
+
+                </Border>
+
                 <ActivityIndicator
                     x:Name="LoadingIndicator"
                     IsVisible="False"
@@ -113,17 +133,14 @@
                     SelectionMode="None">
 
                     <CollectionView.EmptyView>
-
                         <Label
                             Text="Объекты не найдены"
                             TextColor="#4A4947"
                             HorizontalTextAlignment="Center"
                             Margin="10" />
-
                     </CollectionView.EmptyView>
 
                     <CollectionView.ItemTemplate>
-
                         <DataTemplate>
 
                             <Border
@@ -167,7 +184,7 @@
                                         IsVisible="{Binding IsPhoneService}" />
 
                                     <Button
-                                        Text="Открыть на карте"
+                                        Text="Показать на карте"
                                         BackgroundColor="#D8D2C2"
                                         TextColor="#4A4947"
                                         CornerRadius="10"
@@ -176,25 +193,17 @@
                                         IsVisible="{Binding IsMapAvailable}" />
 
                                 </VerticalStackLayout>
-
                             </Border>
 
                         </DataTemplate>
-
                     </CollectionView.ItemTemplate>
 
                 </CollectionView>
 
-                <Label
-                    Text="© OpenStreetMap contributors"
-                    FontSize="11"
-                    TextColor="#4A4947"
-                    HorizontalTextAlignment="Center" />
-
             </VerticalStackLayout>
-
         </ScrollView>
 
+        <!-- Нижняя навигация -->
         <Border
             Grid.Row="1"
             Margin="5,30,5,20"
@@ -211,7 +220,6 @@
 
                 <Border
                     StrokeThickness="0"
-                    Stroke="Transparent"
                     HeightRequest="75"
                     WidthRequest="65">
 
@@ -219,12 +227,7 @@
                         <TapGestureRecognizer Tapped="Home_Tapped"/>
                     </Border.GestureRecognizers>
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-
+                    <Grid RowDefinitions="4*,2*">
                         <Image
                             Source="home.png"
                             Grid.Row="0"
@@ -243,7 +246,6 @@
 
                 <Border
                     StrokeThickness="0"
-                    Stroke="Transparent"
                     HeightRequest="75"
                     WidthRequest="60">
 
@@ -251,12 +253,7 @@
                         <TapGestureRecognizer Tapped="Garage_Tapped"/>
                     </Border.GestureRecognizers>
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-
+                    <Grid RowDefinitions="4*,2*">
                         <Image
                             Source="car2.png"
                             Grid.Row="0"
@@ -275,7 +272,6 @@
 
                 <Border
                     StrokeThickness="0"
-                    Stroke="Transparent"
                     HeightRequest="75"
                     WidthRequest="60">
 
@@ -283,12 +279,7 @@
                         <TapGestureRecognizer Tapped="Service_Tapped"/>
                     </Border.GestureRecognizers>
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-
+                    <Grid RowDefinitions="4*,2*">
                         <Image
                             Source="service2.png"
                             Grid.Row="0"
@@ -307,7 +298,6 @@
 
                 <Border
                     StrokeThickness="0"
-                    Stroke="Transparent"
                     HeightRequest="75"
                     WidthRequest="60">
 
@@ -315,12 +305,7 @@
                         <TapGestureRecognizer Tapped="News_Tapped"/>
                     </Border.GestureRecognizers>
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-
+                    <Grid RowDefinitions="4*,2*">
                         <Image
                             Source="news2.png"
                             Grid.Row="0"
@@ -339,7 +324,6 @@
 
                 <Border
                     StrokeThickness="0"
-                    Stroke="Transparent"
                     HeightRequest="75"
                     WidthRequest="75">
 
@@ -347,12 +331,7 @@
                         <TapGestureRecognizer Tapped="Profile_Tapped"/>
                     </Border.GestureRecognizers>
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="4*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-
+                    <Grid RowDefinitions="4*,2*">
                         <Image
                             Source="profile.png"
                             Grid.Row="0"
@@ -370,9 +349,7 @@
                 </Border>
 
             </HorizontalStackLayout>
-
         </Border>
 
     </Grid>
-
 </ContentPage>

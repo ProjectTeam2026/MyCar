@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿
+using Microsoft.Extensions.Logging;
+using Yandex.MapKit.Maui;
 
 namespace MyCar
 {
@@ -6,15 +8,20 @@ namespace MyCar
     {
         public static MauiApp CreateMauiApp()
         {
+       
+            string apiKey = "a19246a7-fdeb-4cdd-abf5-b2c682ecc7c6";
+
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiApp<App>()
+                .UseYandexMapKit(apiKey, locale: "ru_RU")
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("Anticva-Regular.otf", "AnticvaRegular");
-                    fonts.AddFont("AA_Stetica_Light.otf", "AA_SteticaLight");
+                    fonts.AddFont("AA_Stetica_Light.otf", "AASteticaLight");
                     fonts.AddFont("Vetrino.otf", "Vetrino");
                     fonts.AddFont("NexaText-Light.otf", "NexaTextLight");
                 });
@@ -34,3 +41,4 @@ namespace MyCar
         }
     }
 }
+
