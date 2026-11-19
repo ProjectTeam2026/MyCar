@@ -1,5 +1,4 @@
-﻿
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.Json;
 
 namespace MyCar;
@@ -8,8 +7,12 @@ public class ServiceApi
 {
     private static readonly HttpClient Http = CreateHttpClient();
 
-    private const string Endpoint =
-        "https://overpass-api.de/api/interpreter";
+    private static readonly string[] Endpoints =
+    {
+        "https://overpass-api.de/api/interpreter",
+        "https://overpass.kumi.systems/api/interpreter",
+        "https://overpass.private.coffee/api/interpreter"
+    };
 
     private static HttpClient CreateHttpClient()
     {
@@ -40,49 +43,117 @@ public class ServiceApi
         CancellationToken cancellationToken = default)
     {
         if (!Cities.TryGetValue(city, out var center))
+        {
             throw new ArgumentException(
                 $"Город не поддерживается: {city}");
+        }
 
-        if (type != "fuel" && type != "workshop")
-            throw new ArgumentException("Неизвестный тип объектов.");
+        if (type != "fuel" &&
+            type != "workshop" &&
+            type != "wash")
+        {
+            throw new ArgumentException(
+                "Неизвестный тип объектов.");
+        }
 
-        string query = BuildQuery(center.Lat, center.Lon, type);
+        string query = BuildQuery(
+            center.Lat,
+            center.Lon,
+            type);
 
-        using var content = new FormUrlEncodedContent(
-            new Dictionary<string, string>
+        Exception? lastException = null;
+
+        foreach (string endpoint in Endpoints)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            try
             {
-                ["data"] = query
-            });
+                using var content = new FormUrlEncodedContent(
+                    new Dictionary<string, string>
+                    {
+                        ["data"] = query
+                    });
 
-        using var response = await Http.PostAsync(
-            Endpoint, content, cancellationToken);
+                using var response = await Http.PostAsync(
+                    endpoint,
+                    content,
+                    cancellationToken);
 
-        response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    lastException = new HttpRequestException(
+                        $"Сервер {endpoint} вернул ошибку: " +
+                        $"{(int)response.StatusCode} " +
+                        $"{response.ReasonPhrase}");
 
-        await using var stream =
-            await response.Content.ReadAsStreamAsync(cancellationToken);
+                    continue;
+                }
 
-        using var document = await JsonDocument.ParseAsync(
-            stream, cancellationToken: cancellationToken);
+                await using var stream =
+                    await response.Content.ReadAsStreamAsync(
+                        cancellationToken);
 
+                using var document =
+                    await JsonDocument.ParseAsync(
+                        stream,
+                        cancellationToken: cancellationToken);
+
+                return ParsePlaces(
+                    document.RootElement,
+                    type,
+                    cancellationToken);
+            }
+            catch (OperationCanceledException)
+                when (cancellationToken.IsCancellationRequested)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                lastException = ex;
+            }
+        }
+
+        throw new Exception(
+            "Не удалось получить данные ни с одного сервера OpenStreetMap. " +
+            "Проверь подключение к интернету и попробуй ещё раз.",
+            lastException);
+    }
+
+    private static List<ServicePlace> ParsePlaces(
+        JsonElement root,
+        string type,
+        CancellationToken cancellationToken)
+    {
         var places = new List<ServicePlace>();
+
         var seen = new HashSet<string>();
 
-        if (!document.RootElement.TryGetProperty(
-                "elements", out var elements))
+        if (!root.TryGetProperty(
+                "elements",
+                out var elements))
+        {
             return places;
+        }
 
         foreach (var element in elements.EnumerateArray())
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            if (!element.TryGetProperty("tags", out var tags))
+            if (!element.TryGetProperty(
+                    "tags",
+                    out var tags))
+            {
                 continue;
+            }
 
             double lat = GetNumber(element, "lat");
             double lon = GetNumber(element, "lon");
 
-            if (element.TryGetProperty("center", out var centerElement))
+            if (element.TryGetProperty(
+                    "center",
+                    out var centerElement))
             {
                 lat = GetNumber(centerElement, "lat");
                 lon = GetNumber(centerElement, "lon");
@@ -92,6 +163,7 @@ public class ServiceApi
                 continue;
 
             long id = GetLong(element, "id");
+
             string osmType = GetString(element, "type");
 
             if (!seen.Add($"{osmType}/{id}"))
@@ -100,9 +172,15 @@ public class ServiceApi
             string name = GetTag(tags, "name");
 
             if (string.IsNullOrWhiteSpace(name))
-                name = type == "fuel"
-                    ? "Заправка без названия"
-                    : "СТО без названия";
+            {
+                name = type switch
+                {
+                    "fuel" => "Заправка без названия",
+                    "workshop" => "СТО без названия",
+                    "wash" => "Автомойка без названия",
+                    _ => "Объект без названия"
+                };
+            }
 
             places.Add(new ServicePlace
             {
@@ -115,14 +193,21 @@ public class ServiceApi
             });
         }
 
-        return places.OrderBy(p => p.Name).ToList();
+        return places
+            .OrderBy(p => p.Name)
+            .ToList();
     }
 
     private static string BuildQuery(
-        double lat, double lon, string type)
+        double lat,
+        double lon,
+        string type)
     {
-        string latitude = lat.ToString(CultureInfo.InvariantCulture);
-        string longitude = lon.ToString(CultureInfo.InvariantCulture);
+        string latitude =
+            lat.ToString(CultureInfo.InvariantCulture);
+
+        string longitude =
+            lon.ToString(CultureInfo.InvariantCulture);
 
         string selectors;
 
@@ -134,15 +219,24 @@ public class ServiceApi
                 relation["amenity"="fuel"](around:15000,LAT,LON);
                 """;
         }
-        else
+        else if (type == "workshop")
         {
             selectors = """
                 node["shop"="car_repair"](around:15000,LAT,LON);
                 way["shop"="car_repair"](around:15000,LAT,LON);
                 relation["shop"="car_repair"](around:15000,LAT,LON);
+
                 node["amenity"="car_repair"](around:15000,LAT,LON);
                 way["amenity"="car_repair"](around:15000,LAT,LON);
                 relation["amenity"="car_repair"](around:15000,LAT,LON);
+                """;
+        }
+        else
+        {
+            selectors = """
+                node["amenity"="car_wash"](around:15000,LAT,LON);
+                way["amenity"="car_wash"](around:15000,LAT,LON);
+                relation["amenity"="car_wash"](around:15000,LAT,LON);
                 """;
         }
 
@@ -159,11 +253,15 @@ public class ServiceApi
             """;
     }
 
-    private static string GetTag(JsonElement tags, string key)
+    private static string GetTag(
+        JsonElement tags,
+        string key)
     {
         if (tags.ValueKind == JsonValueKind.Object &&
             tags.TryGetProperty(key, out var value))
+        {
             return value.ToString();
+        }
 
         return "";
     }
@@ -171,7 +269,9 @@ public class ServiceApi
     private static string BuildAddress(JsonElement tags)
     {
         string street = GetTag(tags, "addr:street");
+
         string house = GetTag(tags, "addr:housenumber");
+
         string city = GetTag(tags, "addr:city");
 
         string streetAddress = string.Join(
@@ -190,7 +290,8 @@ public class ServiceApi
     }
 
     private static string GetString(
-        JsonElement element, string key)
+        JsonElement element,
+        string key)
     {
         return element.TryGetProperty(key, out var value)
             ? value.ToString()
@@ -198,7 +299,8 @@ public class ServiceApi
     }
 
     private static double GetNumber(
-        JsonElement element, string key)
+        JsonElement element,
+        string key)
     {
         return element.TryGetProperty(key, out var value) &&
                value.TryGetDouble(out double number)
@@ -207,7 +309,8 @@ public class ServiceApi
     }
 
     private static long GetLong(
-        JsonElement element, string key)
+        JsonElement element,
+        string key)
     {
         return element.TryGetProperty(key, out var value) &&
                value.TryGetInt64(out long number)
@@ -215,4 +318,3 @@ public class ServiceApi
             : 0;
     }
 }
-

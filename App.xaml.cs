@@ -11,7 +11,7 @@ namespace MyCar
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new MainScreenPage());
+            return new Window(new ServicePage());
         }
     }
 }

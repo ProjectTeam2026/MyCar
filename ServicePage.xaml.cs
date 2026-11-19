@@ -6,10 +6,36 @@ namespace MyCar;
 public partial class ServicePage : ContentPage
 {
     private readonly ServiceApi _serviceApi = new();
+
     private readonly ObservableCollection<ServicePlace> _places = new();
 
     private CancellationTokenSource? _loadCts;
+
     private string _selectedType = "fuel";
+
+    private static readonly List<ServicePlace> TowServices = new()
+    {
+        new ServicePlace
+        {
+            Name = "Российское автомобильное товарищество (РАТ)",
+            Type = "tow",
+            Phone = "8 800 200-05-60"
+        },
+
+        new ServicePlace
+        {
+            Name = "Российское автомобильное товарищество (РАТ)",
+            Type = "tow",
+            Phone = "8 800 555-05-60"
+        },
+
+        new ServicePlace
+        {
+            Name = "МИР Ассистанс",
+            Type = "tow",
+            Phone = "8 800 555-04-57"
+        }
+    };
 
     public ServicePage()
     {
@@ -19,45 +45,107 @@ public partial class ServicePage : ContentPage
 
         ShowFuelTab();
 
-        Loaded += async (_, _) => await LoadPlacesAsync();
+        Loaded += async (_, _) =>
+        {
+            await LoadPlacesAsync();
+        };
     }
 
-    private async void OnFuelTabClicked(object sender, EventArgs e)
+    private async void OnFuelTabClicked(
+        object sender,
+        EventArgs e)
     {
         _selectedType = "fuel";
-        ShowFuelTab();
+
+        ShowSelectedTab(FuelTab);
+
         await LoadPlacesAsync();
     }
 
-    private async void OnServiceTabClicked(object sender, EventArgs e)
+    private async void OnServiceTabClicked(
+        object sender,
+        EventArgs e)
     {
         _selectedType = "workshop";
-        ShowServiceTab();
+
+        ShowSelectedTab(ServiceTab);
+
         await LoadPlacesAsync();
     }
 
-    private async void OnCityChanged(object sender, EventArgs e)
+    private async void OnWashTabClicked(
+        object sender,
+        EventArgs e)
     {
-        if (CityPicker.SelectedItem is not null)
-            await LoadPlacesAsync();
+        _selectedType = "wash";
+
+        ShowSelectedTab(WashTab);
+
+        await LoadPlacesAsync();
+    }
+
+    private void OnTowTabClicked(
+        object sender,
+        EventArgs e)
+    {
+        _loadCts?.Cancel();
+
+        _selectedType = "tow";
+
+        ShowSelectedTab(TowTab);
+
+        _places.Clear();
+
+        foreach (var service in TowServices)
+        {
+            _places.Add(service);
+        }
+
+        StatusLabel.Text =
+            "Федеральные службы помощи на дорогах";
+
+        LoadingIndicator.IsRunning = false;
+        LoadingIndicator.IsVisible = false;
+    }
+
+    private void OnCityChanged(
+        object sender,
+        EventArgs e)
+    {
+        if (CityPicker.SelectedItem is not null &&
+            _selectedType != "tow")
+        {
+            _ = LoadPlacesAsync();
+        }
     }
 
     private void ShowFuelTab()
     {
-        FuelTab.BackgroundColor = Color.FromArgb("#B17457");
-        FuelTab.TextColor = Colors.White;
-
-        ServiceTab.BackgroundColor = Color.FromArgb("#D8D2C2");
-        ServiceTab.TextColor = Color.FromArgb("#4A4947");
+        ShowSelectedTab(FuelTab);
     }
 
-    private void ShowServiceTab()
+    private void ShowSelectedTab(Button selected)
     {
-        ServiceTab.BackgroundColor = Color.FromArgb("#B17457");
-        ServiceTab.TextColor = Colors.White;
+        Button[] tabs =
+        {
+            FuelTab,
+            ServiceTab,
+            WashTab,
+            TowTab
+        };
 
-        FuelTab.BackgroundColor = Color.FromArgb("#D8D2C2");
-        FuelTab.TextColor = Color.FromArgb("#4A4947");
+        foreach (var tab in tabs)
+        {
+            bool isSelected = tab == selected;
+
+            tab.BackgroundColor = isSelected
+                ? Color.FromArgb("#B17457")
+                : Color.FromArgb("#D8D2C2");
+
+            tab.TextColor = isSelected
+                ? Colors.White
+                : Color.FromArgb("#4A4947");
+        }
     }
 
     private async Task LoadPlacesAsync()
@@ -65,26 +153,38 @@ public partial class ServicePage : ContentPage
         if (CityPicker.SelectedItem is not string city)
             return;
 
+        if (_selectedType == "tow")
+            return;
+
         _loadCts?.Cancel();
         _loadCts?.Dispose();
-        _loadCts = new CancellationTokenSource();
 
-        var token = _loadCts.Token;
+        var currentCts = new CancellationTokenSource();
+
+        _loadCts = currentCts;
+
+        var token = currentCts.Token;
 
         try
         {
             LoadingIndicator.IsVisible = true;
             LoadingIndicator.IsRunning = true;
+
             StatusLabel.Text = "Загружаем данные карты...";
+
             _places.Clear();
 
             var result = await _serviceApi.GetPlacesAsync(
-                city, _selectedType, token);
+                city,
+                _selectedType,
+                token);
 
             token.ThrowIfCancellationRequested();
 
             foreach (var place in result)
+            {
                 _places.Add(place);
+            }
 
             StatusLabel.Text = result.Count == 0
                 ? "Ничего не найдено. Попробуй другой город."
@@ -92,29 +192,42 @@ public partial class ServicePage : ContentPage
         }
         catch (OperationCanceledException)
         {
-            // Запрос отменён, например при выборе другой вкладки.
+            // Запрос отменён при переключении вкладки или города.
         }
         catch (Exception ex)
         {
-            StatusLabel.Text = "Не удалось загрузить данные.";
+            if (!token.IsCancellationRequested)
+            {
+                StatusLabel.Text =
+                    "Не удалось загрузить данные. Попробуй ещё раз.";
 
-            await DisplayAlert(
-                "Ошибка API",
-                ex.Message,
-                "OK");
+                await DisplayAlert(
+                    "Ошибка API",
+                    ex.Message,
+                    "OK");
+            }
         }
         finally
         {
-            LoadingIndicator.IsRunning = false;
-            LoadingIndicator.IsVisible = false;
+            if (_loadCts == currentCts)
+            {
+                LoadingIndicator.IsRunning = false;
+                LoadingIndicator.IsVisible = false;
+            }
+
+            currentCts.Dispose();
         }
     }
 
-    private async void OnOpenMapClicked(object sender, EventArgs e)
+    private async void OnOpenMapClicked(
+        object sender,
+        EventArgs e)
     {
         if (sender is not Button button ||
             button.CommandParameter is not ServicePlace place)
+        {
             return;
+        }
 
         string lat = place.Latitude.ToString(
             CultureInfo.InvariantCulture);
@@ -131,50 +244,67 @@ public partial class ServicePage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Ошибка", ex.Message, "OK");
+            await DisplayAlert(
+                "Ошибка",
+                ex.Message,
+                "OK");
         }
     }
 
     protected override void OnDisappearing()
     {
         _loadCts?.Cancel();
+
         base.OnDisappearing();
     }
 
-    private void Home_Tapped(object sender, TappedEventArgs e)
+    private void Home_Tapped(
+        object sender,
+        TappedEventArgs e)
     {
         if (Application.Current?.Windows.Count > 0)
         {
-            Application.Current.Windows[0].Page = new MainScreenPage();
+            Application.Current.Windows[0].Page =
+                new MainScreenPage();
         }
     }
 
-    private void Garage_Tapped(object sender, TappedEventArgs e)
+    private void Garage_Tapped(
+        object sender,
+        TappedEventArgs e)
     {
         if (Application.Current?.Windows.Count > 0)
         {
-            Application.Current.Windows[0].Page = new GaragePage();
+            Application.Current.Windows[0].Page =
+                new GaragePage();
         }
     }
 
-    private void Service_Tapped(object sender, TappedEventArgs e)
+    private void Service_Tapped(
+        object sender,
+        TappedEventArgs e)
     {
-        
     }
 
-    private void News_Tapped(object sender, TappedEventArgs e)
+    private void News_Tapped(
+        object sender,
+        TappedEventArgs e)
     {
         if (Application.Current?.Windows.Count > 0)
         {
-            Application.Current.Windows[0].Page = new NewsPage();
+            Application.Current.Windows[0].Page =
+                new NewsPage();
         }
     }
 
-    private void Profile_Tapped(object sender, TappedEventArgs e)
+    private void Profile_Tapped(
+        object sender,
+        TappedEventArgs e)
     {
         if (Application.Current?.Windows.Count > 0)
         {
-            Application.Current.Windows[0].Page = new ProfilePage();
+            Application.Current.Windows[0].Page =
+                new ProfilePage();
         }
     }
 }
